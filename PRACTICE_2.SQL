@@ -22,6 +22,15 @@ WHERE skill IN ('Python', 'Tableau', 'PostgreSQL')
 GROUP BY candidate_id
 HAVING COUNT(DISTINCT(skill)) = 3
 
+EX6:
+SELECT 
+  user_id	
+FROM posts
+WHERE post_date < '01/01/2022'
+GROUP BY 
+  user_id	
+HAVING COUNT(user_id) =3
+--NOT DONE
 
 
 
