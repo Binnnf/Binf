@@ -8,7 +8,10 @@ SELECT
     COUNT(city) - COUNT(DISTINCT(city))
 FROM station
 
-EX3:
+EX3: 
+SELECT 
+    ROUND(AVG(salary), 0) - ROUND(AVG(REPLACE(salary, '0', '' )), 0)
+FROM EMPLOYEES 
 
 EX4:
 SELECT 
