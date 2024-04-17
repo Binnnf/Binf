@@ -41,12 +41,65 @@ GROUP BY card_name
 ORDER BY difference DESC
 
 EX8:
-SELECT 
+--Câu lệnh sai:
+SELECT
   manufacturer
-  , COUNT(drug)
-  , total_sales - cogs 
-FROM pharmacy_sales
+  , SUM(drug_count) total_drug --> Sai
+  , SUM(losses) total_loss
+FROM (
+SELECT  
+  manufacturer
+  , COUNT(drug) drug_count
+  , SUM(cogs - total_sales) losses
+FROM pharmacy_sales 
 GROUP BY manufacturer, total_sales, cogs
+) AS A
+WHERE losses > 0
+GROUP BY manufacturer
+ORDER BY total_loss DESC
+
+Câu lệnh đúng:
+SELECT  
+  manufacturer
+  , COUNT(drug) drug_count
+  , SUM(cogs - total_sales) losses
+FROM pharmacy_sales 
+WHERE cogs - total_sales > 0
+GROUP BY manufacturer
+ORDER BY losses DESC 
+
+EX9:
+SELECT 
+    *
+FROM Cinema
+WHERE 
+    id % 2 <> 0
+    AND description <> 'boring'
+ORDER BY rating DESC
+
+EX10:
+SELECT
+    teacher_id 
+    , COUNT(DISTINCT(subject_id)) cnt 
+FROM Teacher
+GROUP BY teacher_id
+
+EX11:
+SELECT
+    user_id
+    ,  COUNT(follower_id) followers_count
+FROM Followers
+GROUP BY user_id     
+ORDER BY user_id ASC
+
+EX12
+SELECT 
+    class
+FROM Courses
+GROUP BY class    
+HAVING COUNT(student) >= 5
+
+
 
 
 
