@@ -24,13 +24,29 @@ HAVING COUNT(DISTINCT(skill)) = 3
 
 EX6:
 SELECT 
-  user_id	
+  user_id
+  , DATE(MAX(post_date)) - DATE(MIN(post_date))
 FROM posts
-WHERE post_date < '01/01/2022'
+WHERE post_date >= '2021-01-01' AND post_date < '2022-01-01'
 GROUP BY 
   user_id	
-HAVING COUNT(user_id) =3
---NOT DONE
+HAVING COUNT(user_id) >= 2
+
+EX7:
+SELECT 
+  card_name
+  , MAX(issued_amount) - MIN(issued_amount) difference  
+FROM monthly_cards_issued
+GROUP BY card_name
+ORDER BY difference DESC
+
+EX8:
+SELECT 
+  manufacturer
+  , COUNT(drug)
+  , total_sales - cogs 
+FROM pharmacy_sales
+GROUP BY manufacturer, total_sales, cogs
 
 
 
