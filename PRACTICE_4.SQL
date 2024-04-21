@@ -21,6 +21,21 @@ SELECT
     END triangle 
 FROM Triangle
 
+EX3:
+WITH call_category AS (
+  SELECT 
+    SUM(CASE 
+      WHEN call_category IN ('', 'n/a') THEN 1
+      ELSE 0
+    END) count_uncategorised 
+    , COUNT(call_category) call_categorised
+  FROM callers
+)
+
+SELECT 
+  ROUND((count_uncategorised / call_categorised), 1) * 100 call_percentage
+FROM call_category
+
 EX5:
 SELECT 
     pclass
