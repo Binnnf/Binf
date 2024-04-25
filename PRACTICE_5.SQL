@@ -17,7 +17,6 @@ WITH a AS (
   ON emails.email_id = texts.email_id
   WHERE 
     signup_action <> 'Not Confirmed'
-    OR signup_action IS NULL
   GROUP BY user_id
 )
 SELECT 
@@ -25,7 +24,6 @@ SELECT
 FROM emails 
 LEFT JOIN a
 ON emails.user_id = a.user_id
---> NOT RIGHT YET
 
 
 
