@@ -74,6 +74,27 @@ SELECT
 FROM Employees 
 WHERE reports_to >= 1
 
+EX6:
+SELECT
+    a.employee_id 
+    , a.name    
+    , COUNT(b.reports_to)  reports_count  
+    , ROUND(AVG(b.age), 0) average_age 
+FROM Employees a
+INNER JOIN Employees b
+ON a.employee_id  = b.reports_to
+WHERE a.employee_id = b.reports_to
+GROUP BY a.name  
+
+EX7:
+SELECT a.page_id
+FROM pages a
+FULL JOIN page_likes b
+ON a.page_id = b.page_id
+GROUP BY 
+  a.page_id
+  , b.page_id
+HAVING b.page_id IS NULL
 
 
 
