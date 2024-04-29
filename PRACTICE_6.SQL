@@ -11,7 +11,7 @@ HAVING COUNT(*) >1
 SELECT COUNT(count_dupe)
 FROM a
 
-EX2:
+--EX2:
 WITH a AS (
 SELECT
   category
@@ -50,7 +50,7 @@ UNION ALL
 SELECT *
 FROM b
 
-EX3:
+--EX3:
 WITH a AS (
 SELECT 
   policy_holder_id
@@ -62,7 +62,7 @@ HAVING COUNT(case_id) >= 3
 SELECT COUNT(*) 
 FROM a
 
-EX4:
+--EX4:
 SELECT a.page_id
 FROM pages a
 FULL JOIN page_likes b
@@ -71,7 +71,7 @@ WHERE b.page_id IS NULL
 GROUP BY 
   a.page_id
 
-EX5:
+--EX5:
 SELECT 
   EXTRACT(MONTH FROM event_date)
   , COUNT(*)
@@ -82,7 +82,7 @@ WHERE
   AND event_type = 'sign-in'
 GROUP BY EXTRACT(MONTH FROM event_date)
 
-EX6:
+--EX6:
 WITH active_users_july AS (
 SELECT 
   user_id
@@ -117,7 +117,7 @@ GROUP BY
   a.user_id
   , a.event_date
 
-EX7:
+--EX7:
 WITH active_users_july AS (
 SELECT 
   user_id
