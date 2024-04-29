@@ -1,4 +1,4 @@
-EX1:
+--EX1:
 WITH a AS (
 SELECT 
   company_id || title || description
