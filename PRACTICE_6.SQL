@@ -143,11 +143,12 @@ GROUP BY
   , event_date
 )
 SELECT 
-  7 AS month
+  EXTRACT(MONTH FROM a.event_date) month1
   , COUNT(DISTINCT(a.user_id)) monthly_active_users
 FROM active_users_july a
 INNER JOIN active_users_june b
 ON a.user_id = b.user_id
+GROUP BY EXTRACT(MONTH FROM a.event_date) 
 
 
 
