@@ -151,12 +151,55 @@ ON a.user_id = b.user_id
 GROUP BY EXTRACT(MONTH FROM a.event_date) 
 
 EX8:
-SELECT 
-    customer_id 
-FROM Customer a
-GROUP BY customer_id
-HAVING COUNT(product_key) =2
+WITH a AS (
+    SELECT
+        product_id 
+        , year first_year
+        , quantity 
+        , price 
+    FROM sales
+    WHERE product_id = 100
+    GROUP BY 
+        product_id 
+        , quantity 
+        , price
+        , year
+    ORDER BY year ASC
+    LIMIT 1
+)
+, b AS (
+    SELECT
+        product_id 
+        , year first_year
+        , quantity 
+        , price 
+    FROM sales
+    WHERE product_id = 200
+    GROUP BY 
+        product_id 
+        , quantity 
+        , price
+        , year
+    ORDER BY year ASC
+    LIMIT 1
+)
+SELECT *
+FROM a
+UNION ALL
+SELECT *
+FROM b
 
+EX9:
+SELECT a.employee_id
+FROM Employees a
+WHERE 
+NOT EXISTS (
+        SELECT b.employee_id 
+        FROM Employees b
+        WHERE a.manager_id = b.employee_id
+)
+AND a.manager_id IS NOT NULL 
+AND a.salary < 30000
 
 
 
