@@ -150,6 +150,13 @@ INNER JOIN active_users_june b
 ON a.user_id = b.user_id
 GROUP BY EXTRACT(MONTH FROM a.event_date) 
 
+EX8:
+SELECT 
+    customer_id 
+FROM Customer a
+GROUP BY customer_id
+HAVING COUNT(product_key) =2
+
 
 
 
