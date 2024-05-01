@@ -150,7 +150,7 @@ INNER JOIN active_users_june b
 ON a.user_id = b.user_id
 GROUP BY EXTRACT(MONTH FROM a.event_date) 
 
-EX8:
+--EX8:
 WITH a AS (
     SELECT
         product_id 
@@ -189,7 +189,7 @@ UNION ALL
 SELECT *
 FROM b
 
-EX9:
+--EX9:
 SELECT a.employee_id
 FROM Employees a
 WHERE 
@@ -201,7 +201,64 @@ NOT EXISTS (
 AND a.manager_id IS NOT NULL 
 AND a.salary < 30000
 
+--EX10:
 
+WITH a AS (
+SELECT 
+  company_id || title || description
+  , COUNT(*) count_dupe
+FROM job_listings
+GROUP BY 
+  company_id || title || description
+HAVING COUNT(*) >1
+)
+SELECT COUNT(count_dupe)
+FROM a
+
+--EX11: https://leetcode.com/problems/movie-rating/?envType=study-plan-v2&envId=top-sql-50
+
+WITH count_user_rating AS (
+    SELECT
+        user_id
+        , COUNT(user_id) count_rating
+    FROM MovieRating
+    GROUP BY user_id
+    ORDER BY count_rating DESC
+    LIMIT 2
+)
+, highest_avg_rating AS (
+    SELECT
+        movie_id
+        , AVG(rating) avg_rating
+    FROM MovieRating
+    WHERE 
+        EXTRACT(YEAR FROM created_at) = 2020
+        AND EXTRACT(MONTH FROM created_at) = 2
+    GROUP BY movie_id
+    ORDER BY avg_rating DESC
+    LIMIT 2
+)
+(SELECT b.name results
+FROM count_user_rating a 
+JOIN Users b
+ON a.user_id = b.user_id
+ORDER BY a.user_id
+LIMIT 1)
+UNION ALL
+(SELECT b.title
+FROM highest_avg_rating a 
+JOIN Movies b
+ON a.movie_id = b.movie_id
+ORDER BY a.movie_id ASC
+LIMIT 1)
+
+
+  
+  
+  
+  
+  
+  
 
 
 
