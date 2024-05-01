@@ -1,4 +1,4 @@
---EX1:
+--EX1: datalemur-duplicate-job-listings.
 WITH a AS (
 SELECT 
   company_id || title || description
@@ -11,7 +11,7 @@ HAVING COUNT(*) >1
 SELECT COUNT(count_dupe)
 FROM a
 
---EX2:
+--EX2: datalemur-highest-grossing.
 WITH a AS (
 SELECT
   category
@@ -50,7 +50,7 @@ UNION ALL
 SELECT *
 FROM b
 
---EX3:
+--EX3: datalemur-frequent-callers.
 WITH a AS (
 SELECT 
   policy_holder_id
@@ -62,7 +62,7 @@ HAVING COUNT(case_id) >= 3
 SELECT COUNT(*) 
 FROM a
 
---EX4:
+--EX4: datalemur-page-with-no-likes.
 SELECT a.page_id
 FROM pages a
 FULL JOIN page_likes b
@@ -71,7 +71,7 @@ WHERE b.page_id IS NULL
 GROUP BY 
   a.page_id
 
---EX5:
+--EX5: datalemur-user-retention.
 SELECT 
   EXTRACT(MONTH FROM event_date)
   , COUNT(*)
@@ -82,7 +82,7 @@ WHERE
   AND event_type = 'sign-in'
 GROUP BY EXTRACT(MONTH FROM event_date)
 
---EX6:
+--EX6: leetcode-monthly-transactions.
 WITH active_users_july AS (
 SELECT 
   user_id
@@ -117,7 +117,7 @@ GROUP BY
   a.user_id
   , a.event_date
 
---EX7:
+--EX7: leetcode-product-sales-analysis.
 WITH active_users_july AS (
 SELECT 
   user_id
@@ -150,7 +150,7 @@ INNER JOIN active_users_june b
 ON a.user_id = b.user_id
 GROUP BY EXTRACT(MONTH FROM a.event_date) 
 
---EX8:
+--EX8: leetcode-customers-who-bought-all-products.
 WITH a AS (
     SELECT
         product_id 
@@ -189,7 +189,7 @@ UNION ALL
 SELECT *
 FROM b
 
---EX9:
+--EX9: leetcode-employees-whose-manager-left-the-company.
 SELECT a.employee_id
 FROM Employees a
 WHERE 
@@ -201,7 +201,7 @@ NOT EXISTS (
 AND a.manager_id IS NOT NULL 
 AND a.salary < 30000
 
---EX10:
+--EX10: leetcode-primary-department-for-each-employee.
 
 WITH a AS (
 SELECT 
@@ -252,8 +252,28 @@ ON a.movie_id = b.movie_id
 ORDER BY a.movie_id ASC
 LIMIT 1)
 
+--EX12: https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends/?envType=study-plan-v2&envId=top-sql-50
 
-  
+WITH a AS (
+SELECT 
+    requester_id user_id
+    , COUNT(requester_id) count_friends
+FROM RequestAccepted
+GROUP BY requester_id
+UNION 
+SELECT 
+    accepter_id user_id
+    , COUNT(accepter_id) count_friends
+FROM RequestAccepted
+GROUP BY accepter_id
+)
+SELECT 
+    user_id id
+    , SUM(count_friends) num
+FROM a
+GROUP BY user_id
+ORDER BY SUM(count_friends) DESC
+LIMIT 1
   
   
   
