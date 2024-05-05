@@ -41,8 +41,11 @@ SELECT
 FROM a
 WHERE rn = 1
 
-
 --ex3: datalemur-third-transaction.
+
+
+
+
 --ex4: datalemur-histogram-users-purchases.
 --ex5: datalemur-rolling-average-tweets.
 --ex6: datalemur-repeated-payments.
