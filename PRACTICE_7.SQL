@@ -65,7 +65,29 @@ WHERE rn = 3
 --ex5: datalemur-rolling-average-tweets.
 --ex6: datalemur-repeated-payments.
 --ex7: datalemur-highest-grossing.
---ex8: datalemur-top-fans-rank.
+--ex8: https://datalemur.com/questions/top-fans-rank
+
+WITH a AS (  
+  SELECT 
+    artist_name
+    , COUNT(b.song_id) count1
+  FROM artists a
+  JOIN songs b 
+  ON a.artist_id = b.artist_id 
+  JOIN global_song_rank c
+  ON b.song_id = c.song_id
+  WHERE c.rank <= 10
+  GROUP BY artist_name
+)
+, b AS (  
+  SELECT 
+    artist_name
+    , DENSE_RANK() OVER(ORDER BY count1 DESC) artist_rank
+  FROM a  
+)
+SELECT *
+FROM b
+  WHERE artist_rank <= 5 
 
 
 
