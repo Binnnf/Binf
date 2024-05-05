@@ -43,8 +43,20 @@ WHERE rn = 1
 
 --ex3: datalemur-third-transaction.
 
-
-
+WITH a AS (  
+  SELECT 
+    user_id
+    , spend
+    , transaction_date
+    , ROW_NUMBER() OVER(PARTITION BY user_id) rn
+  FROM transactions
+)
+SELECT 
+  user_id
+  , spend
+  , transaction_date
+FROM a 
+WHERE rn = 3 
 
 --ex4: datalemur-histogram-users-purchases.
 --ex5: datalemur-rolling-average-tweets.
