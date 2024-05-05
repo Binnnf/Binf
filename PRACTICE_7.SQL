@@ -58,9 +58,23 @@ SELECT
 FROM a 
 WHERE rn = 3 
 
---ex4: datalemur-histogram-users-purchases.
+--ex4: https://datalemur.com/questions/histogram-users-purchases
 
-
+WITH a AS (  
+  SELECT 
+    transaction_date
+    , user_id
+    , COUNT(product_id) OVER(PARTITION BY user_id ORDER BY transaction_date DESC) purchase_count
+    , ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY transaction_date DESC) ranking
+  FROM user_transactions
+)
+SELECT 
+  transaction_date
+  , user_id
+  , purchase_count
+FROM a
+WHERE ranking = 1 
+ORDER BY transaction_date
 
 --ex5: datalemur-rolling-average-tweets.
 --ex6: datalemur-repeated-payments.
