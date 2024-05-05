@@ -43,7 +43,7 @@ WHERE rn = 1
 
 --ex3: datalemur-third-transaction.
 
-WITH a AS (  
+WITH a AS (
   SELECT 
     user_id
     , spend
@@ -59,6 +59,9 @@ FROM a
 WHERE rn = 3 
 
 --ex4: datalemur-histogram-users-purchases.
+
+
+
 --ex5: datalemur-rolling-average-tweets.
 --ex6: datalemur-repeated-payments.
 --ex7: datalemur-highest-grossing.
