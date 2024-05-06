@@ -77,8 +77,53 @@ WHERE ranking = 1
 ORDER BY transaction_date
 
 --ex5: datalemur-rolling-average-tweets.
---ex6: datalemur-repeated-payments.
---ex7: datalemur-highest-grossing.
+--ex6: https://datalemur.com/questions/repeated-payments
+
+WITH a AS (  
+  SELECT 
+    merchant_id
+    , LAG(merchant_id) OVER() lag_merchant_id
+    , credit_card_id
+    , LAG(credit_card_id) OVER() lag_credit_card_id
+    , amount
+    , LAG(amount) OVER() lag_amount
+    , (EXTRACT(MINUTE FROM transaction_timestamp) 
+    + EXTRACT(HOUR FROM transaction_timestamp) * 60) time_diff
+    , LAG(EXTRACT(MINUTE FROM transaction_timestamp) 
+    + EXTRACT(HOUR FROM transaction_timestamp) * 60) OVER() lag_time_diff
+  FROM transactions
+)
+SELECT COUNT(*)
+FROM a  
+WHERE 
+  merchant_id = lag_merchant_id 
+  AND credit_card_id = lag_credit_card_id
+  AND amount = lag_amount
+  AND time_diff - lag_time_diff <= 10
+
+--ex7: https://datalemur.com/questions/sql-highest-grossing
+WITH a AS (
+  SELECT 
+    category
+    , product
+    , SUM(spend) OVER(PARTITION BY category, product) total_spend
+  FROM product_spend 
+  WHERE EXTRACT(YEAR FROM transaction_date) = 2022
+)
+, b AS (
+  SELECT 
+    *
+    , DENSE_RANK() OVER(PARTITION BY category ORDER BY total_spend DESC) ranking
+  FROM a 
+  GROUP BY category, product, total_spend
+)
+SELECT 
+  category
+  , product	
+  ,total_spend
+FROM b
+WHERE ranking <= 2
+
 --ex8: https://datalemur.com/questions/top-fans-rank
 
 WITH a AS (  
