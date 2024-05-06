@@ -76,7 +76,25 @@ FROM a
 WHERE ranking = 1 
 ORDER BY transaction_date
 
---ex5: datalemur-rolling-average-tweets.
+--ex5: https://datalemur.com/questions/rolling-average-tweets
+
+WITH a AS (  
+  SELECT 
+    *
+    , LAG(tweet_count) OVER(PARTITION BY user_id) lag1
+    , LAG(tweet_count, 2) OVER(PARTITION BY user_id) lag2
+  FROM tweets
+)
+SELECT 
+  user_id
+  , tweet_date
+  , CASE 
+      WHEN lag1 IS NULL THEN ROUND(tweet_count/1.0, 2)
+      WHEN lag2 IS NULL THEN ROUND((tweet_count + lag1)/2.0, 2)
+      ELSE ROUND((tweet_count + lag1 + lag2)/3.0, 2)
+  END rolling_avg_3d
+FROM a 
+
 --ex6: https://datalemur.com/questions/repeated-payments
 
 WITH a AS (  
@@ -102,6 +120,7 @@ WHERE
   AND time_diff - lag_time_diff <= 10
 
 --ex7: https://datalemur.com/questions/sql-highest-grossing
+
 WITH a AS (
   SELECT 
     category
