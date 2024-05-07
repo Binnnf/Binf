@@ -1,4 +1,5 @@
-EX1:
+--EX1: hackerrank-average-population-of-each-continent.
+
 SELECT 
     country.continent
     , ROUND(AVG(city.population), 0) avg_population
@@ -7,7 +8,8 @@ LEFT JOIN city
 ON city.countrycode = country.code
 GROUP BY country.continent
 
-EX2:
+--EX2: datalemur-signup-confirmation-rate.
+
 WITH a AS (
   SELECT
     user_id
@@ -25,7 +27,8 @@ FROM emails
 LEFT JOIN a
 ON emails.user_id = a.user_id
 
-EX3:
+--EX3: datalemur-time-spent-snaps.
+
 WITH time_spent_open AS (
   SELECT 
     age_bucket
@@ -56,7 +59,8 @@ FROM time_spent_open c
 LEFT JOIN time_spent_send d
 ON c.age_bucket = d.age_bucket
 
-EX4:
+--EX4: datalemur-supercloud-customer.
+
 SELECT 
   customer_id
 FROM customer_contracts a
@@ -65,7 +69,8 @@ ON a.product_id = b.product_id
 GROUP BY customer_id
 HAVING COUNT(DISTINCT(product_category)) = 3
 
-EX5:
+--EX5: leetcode-the-number-of-employees-which-report-to-each-employee.
+
 SELECT
     employee_id 
     , name    
@@ -74,7 +79,8 @@ SELECT
 FROM Employees 
 WHERE reports_to >= 1
 
-EX6:
+--EX6: leetcode-list-the-products-ordered-in-a-period.
+
 SELECT
     a.employee_id 
     , a.name    
@@ -86,7 +92,8 @@ ON a.employee_id  = b.reports_to
 WHERE a.employee_id = b.reports_to
 GROUP BY a.name  
 
-EX7:
+--EX7: leetcode-sql-page-with-no-likes.
+
 SELECT a.page_id
 FROM pages a
 FULL JOIN page_likes b
