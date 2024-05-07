@@ -1,31 +1,37 @@
-EX1:
+--EX1: hackerrank-weather-observation-station-3.
+
 SELECT DISTINCT city
 FROM station
 WHERE id % 2 = 0
 
-EX2:
+--EX2: hackerrank-weather-observation-station-4.
+
 SELECT 
     COUNT(city) - COUNT(DISTINCT(city))
 FROM station
 
-EX3: 
+--EX3: hackerrank-the-blunder.
+
 SELECT 
     ROUND(AVG(salary), 0) - ROUND(AVG(REPLACE(salary, '0', '' )), 0)
 FROM EMPLOYEES 
 
-EX4:
+--EX4: datalemur-alibaba-compressed-mean.
+
 SELECT 
   ROUND(CAST(SUM(item_count * order_occurrences) / SUM(order_occurrences) AS decimal), 1)
 FROM items_per_order
 
-EX 5:
+--EX5:datalemur-matching-skills.
+
 SELECT candidate_id
 FROM candidates
 WHERE skill IN ('Python', 'Tableau', 'PostgreSQL')
 GROUP BY candidate_id
 HAVING COUNT(DISTINCT(skill)) = 3
 
-EX6:
+--EX6: datalemur-verage-post-hiatus-1.
+
 SELECT 
   user_id
   , DATE(MAX(post_date)) - DATE(MIN(post_date))
@@ -35,7 +41,8 @@ GROUP BY
   user_id	
 HAVING COUNT(user_id) >= 2
 
-EX7:
+--EX7: datalemur-cards-issued-difference.
+
 SELECT 
   card_name
   , MAX(issued_amount) - MIN(issued_amount) difference  
@@ -43,7 +50,8 @@ FROM monthly_cards_issued
 GROUP BY card_name
 ORDER BY difference DESC
 
-EX8:
+--EX8: datalemur-non-profitable-drugs.
+
 --Câu lệnh sai:
 SELECT
   manufacturer
@@ -71,7 +79,8 @@ WHERE cogs - total_sales > 0
 GROUP BY manufacturer
 ORDER BY losses DESC 
 
-EX9:
+--EX9: leetcode-not-boring-movies.
+
 SELECT 
     *
 FROM Cinema
@@ -80,14 +89,16 @@ WHERE
     AND description <> 'boring'
 ORDER BY rating DESC
 
-EX10:
+--EX10: leetcode-number-of-unique-subject.
+
 SELECT
     teacher_id 
     , COUNT(DISTINCT(subject_id)) cnt 
 FROM Teacher
 GROUP BY teacher_id
 
-EX11:
+--EX11: leetcode-find-followers-count.
+
 SELECT
     user_id
     ,  COUNT(follower_id) followers_count
@@ -95,7 +106,8 @@ FROM Followers
 GROUP BY user_id     
 ORDER BY user_id ASC
 
-EX12
+--EX12: leetcode-classes-more-than-5-students.
+
 SELECT 
     class
 FROM Courses
