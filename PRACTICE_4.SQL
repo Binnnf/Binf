@@ -1,4 +1,5 @@
-EX1:
+--EX1: datalemur-laptop-mobile-viewership.
+
 SELECT 
   SUM(CASE 
       WHEN device_type = 'laptop' THEN 1
@@ -10,7 +11,8 @@ SELECT
     END) mobile_views 
 FROM viewership
 
-EX2:
+--EX2: datalemur-triangle-judgement.
+
 SELECT 
     x
     , y
@@ -21,7 +23,8 @@ SELECT
     END triangle 
 FROM Triangle
 
-EX3:
+--EX3: datalemur-uncategorized-calls-percentage.
+
 WITH call_category AS (
   SELECT 
     SUM(CASE 
@@ -36,7 +39,12 @@ SELECT
   ROUND((count_uncategorised / call_categorised), 1) * 100 call_percentage
 FROM call_category
 
-EX5:
+--EX4: https://leetcode.com/problems/find-customer-referee/description/?envType=study-plan-v2&envId=top-sql-50
+
+
+
+--EX5: stratascratch the-number-of-survivors.
+
 SELECT 
     pclass
     , SUM(CASE 
