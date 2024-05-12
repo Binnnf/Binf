@@ -135,44 +135,44 @@ ALTER TABLE sales_dataset_rfm_prj
 ADD COLUMN orderdate3 TIMESTAMP
 
 --Code sai
-UPDATE sales_dataset_rfm_prj
-SET orderdate1 = (
-    SELECT 
-        TO_CHAR(TO_DATE(parts[2] || '/' || parts[1] || '/' || parts[3] || ' ' || parts[4]
-						, 'MM/DD/YYYY HH24:MI'), 'DD/M/YYYY HH24:MI')
-    FROM (
-        SELECT 
-            regexp_split_to_array(orderdate1, '[ /:]') AS parts
-    ) AS split_parts
-);
+-- UPDATE sales_dataset_rfm_prj
+-- SET orderdate1 = (
+--     SELECT 
+--         TO_CHAR(TO_DATE(parts[2] || '/' || parts[1] || '/' || parts[3] || ' ' || parts[4]
+-- 						, 'MM/DD/YYYY HH24:MI'), 'DD/M/YYYY HH24:MI')
+--     FROM (
+--         SELECT 
+--             regexp_split_to_array(orderdate1, '[ /:]') AS parts
+--     ) AS split_parts
+-- );
 
 --Code này để chạy thử nhưng không đúng
-UPDATE sales_dataset_rfm_prj
-SET orderdate3 = (
-	SELECT 
-		CAST(orderdate2 AS TIMESTAMP)
-	FROM (
-		SELECT CONCAT(yyyy,'-',mm,'-',dd,' ',hhmm) orderdate2
-		FROM (
-			SELECT 
-				yyyy
-				, mm
-				, REPLACE(dd, '/', '') dd
-				, hhmm
-			FROM (
-				SELECT
-					orderdate1
-					, LEFT(orderdate1, POSITION('/' IN orderdate1) - 1) mm
-					, SUBSTRING(orderdate1, POSITION('/' IN orderdate1) + 1, 
-								LENGTH(orderdate1) - POSITION(':' IN orderdate1)) dd
-					, SUBSTRING(orderdate1, POSITION(':' IN orderdate1) - 6, 
-								LENGTH(orderdate1) - POSITION(':' IN orderdate1) + 2) yyyy
-					, RIGHT(orderdate1, 4) hhmm
-				FROM sales_dataset_rfm_prj
-			)
-		)
-	) 
-)
+-- UPDATE sales_dataset_rfm_prj
+-- SET orderdate3 = (
+-- 	SELECT 
+-- 		CAST(orderdate2 AS TIMESTAMP)
+-- 	FROM (
+-- 		SELECT CONCAT(yyyy,'-',mm,'-',dd,' ',hhmm) orderdate2
+-- 		FROM (
+-- 			SELECT 
+-- 				yyyy
+-- 				, mm
+-- 				, REPLACE(dd, '/', '') dd
+-- 				, hhmm
+-- 			FROM (
+-- 				SELECT
+-- 					orderdate1
+-- 					, LEFT(orderdate1, POSITION('/' IN orderdate1) - 1) mm
+-- 					, SUBSTRING(orderdate1, POSITION('/' IN orderdate1) + 1, 
+-- 								LENGTH(orderdate1) - POSITION(':' IN orderdate1)) dd
+-- 					, SUBSTRING(orderdate1, POSITION(':' IN orderdate1) - 6, 
+-- 								LENGTH(orderdate1) - POSITION(':' IN orderdate1) + 2) yyyy
+-- 					, RIGHT(orderdate1, 4) hhmm
+-- 				FROM sales_dataset_rfm_prj
+-- 			)
+-- 		)
+-- 	) 
+-- )
 
 --Code đúng
 --Sắp xếp lại dữ liệu trong cột orderdate, chuyển kiểu dữ liệu thành timestamp và truyền vào một cột mới trong bảng
