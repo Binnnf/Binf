@@ -178,33 +178,33 @@ ADD COLUMN orderdate3 TIMESTAMP
 --Sắp xếp lại dữ liệu trong cột orderdate, chuyển kiểu dữ liệu thành timestamp và truyền vào một cột mới trong bảng
 UPDATE sales_dataset_rfm_prj
 SET orderdate3 = CAST(CONCAT(
-							SUBSTRING(orderdate1, POSITION(':' IN orderdate1) - 6, 
-								LENGTH(orderdate1) - POSITION(':' IN orderdate1) + 2)
-							, '-'
-							, LEFT(orderdate1, POSITION('/' IN orderdate1) - 1)
-							, '-'
-                            , REPLACE(SUBSTRING(orderdate1, POSITION('/' IN orderdate1) + 1, 
-								LENGTH(orderdate1) - POSITION(':' IN orderdate1)), '/', '')
-							, ' '
-							, RIGHT(orderdate1, 4)
-							)
-					  AS TIMESTAMP
-					 );
+			SUBSTRING(orderdate1, POSITION(':' IN orderdate1) - 6, 
+			LENGTH(orderdate1) - POSITION(':' IN orderdate1) + 2)
+			, '-'
+			, LEFT(orderdate1, POSITION('/' IN orderdate1) - 1)
+			, '-'
+                        , REPLACE(SUBSTRING(orderdate1, POSITION('/' IN orderdate1) + 1, 
+						LENGTH(orderdate1) - POSITION(':' IN orderdate1)), '/', '')
+			, ' '
+			, RIGHT(orderdate1, 4)
+			)
+			AS TIMESTAMP
+		);
 
 --Code này sai
 -- UPDATE sales_dataset_rfm_prj
 -- SET orderdate3 = CAST(CONCAT(
--- 							REPLACE(SUBSTRING(orderdate1, POSITION('/' IN orderdate1) + 1
---                             						, POSITION('/' IN orderdate1) + 5), '/', '')
--- 							, '-'
--- 							, SUBSTRING(orderdate1, POSITION('/' IN orderdate1) + 7, 4)
--- 							, '-'
---                             , LEFT(orderdate1, POSITION('/' IN orderdate1) - 1)
--- 							, ' '
--- 							, RIGHT(orderdate1, 5)
--- 							)
--- 					  AS TIMESTAMP
--- 					 );
+-- 			REPLACE(SUBSTRING(orderdate1, POSITION('/' IN orderdate1) + 1
+--                             			, POSITION('/' IN orderdate1) + 5), '/', '')
+-- 			, '-'
+-- 			, SUBSTRING(orderdate1, POSITION('/' IN orderdate1) + 7, 4)
+-- 			, '-'
+--                      , LEFT(orderdate1, POSITION('/' IN orderdate1) - 1)
+-- 			, ' '
+-- 			, RIGHT(orderdate1, 5)
+-- 			)
+-- 			AS TIMESTAMP
+-- 		);
 
 --Xóa cột dữ liệu gốc orderdate và cột orderdate1
 ALTER TABLE sales_dataset_rfm_prj
